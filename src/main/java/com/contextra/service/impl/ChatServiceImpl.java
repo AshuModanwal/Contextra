@@ -26,6 +26,9 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void saveMessage(UUID sessionId, ChatMessage.Role role, String content) {
+        if (!sessionRepository.existsById(sessionId)) {
+            throw new RuntimeException("Invalid session");
+        }
         ChatMessage message = ChatMessage.builder()
                 .sessionId(sessionId)
                 .role(role)

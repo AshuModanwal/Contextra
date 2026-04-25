@@ -1,6 +1,6 @@
 package com.contextra.controller;
 
-import com.contextra.service.AiService;
+import com.contextra.ai.ConversationalRagService;
 import com.contextra.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final AiService aiService;
     private final ChatService chatService;
+    private final ConversationalRagService ragService;
 
     @PostMapping("/session")
     public UUID createSession() {
@@ -23,7 +23,6 @@ public class ChatController {
     @PostMapping
     public String chat(@RequestParam UUID sessionId,
                        @RequestParam String question) {
-
-        return aiService.askQuestion(sessionId, question);
+        return ragService.ask(sessionId, question);
     }
 }
